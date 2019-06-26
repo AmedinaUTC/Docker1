@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');vis
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -23,6 +23,19 @@ app.get('/', (req, res) => {
   Item.find()
     .then(items => res.render('index', { items }))
     .catch(err => res.status(404).json({ msg: 'No items found' }));
+});
+
+app.get('/items', (req, res) => {
+  Item.find({})
+  .exec()
+  .then(docs => {
+      res.status(200).json({
+          docs
+      });
+  })
+  .catch(err => {
+      console.log(err)
+  });
 });
 
 app.post('/item/add', (req, res) => {
